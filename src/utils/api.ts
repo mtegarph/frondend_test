@@ -56,8 +56,8 @@ export const updatePost = async (token: string, postId: string, post: { message:
   return response.data;
 };
 
-export const deletePost = async (token: string, postId: string) => {
-  await apiClient.delete(`/posts/${postId}`, {
+export const deletePost = async (token: string, id: string) => {
+  await apiClient.delete(`/posts/${id}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
   });
 };
