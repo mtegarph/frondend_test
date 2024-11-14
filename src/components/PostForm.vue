@@ -1,7 +1,11 @@
 <template>
   <div class="login-container">
-    <!-- Display Posts -->
-    <h2 class="title">Posts</h2>
+    
+    <div class="header">
+      <h2 class="title">Posts</h2>
+      <button class="logout-btn" @click="logout">Logout</button>
+    </div>
+   
     <div class="post-table">
         <table>
           <thead>
@@ -50,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import router from '@/router';
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
@@ -61,7 +66,10 @@ export default defineComponent({
     const showModal = ref(false);
     const isUpdating = ref(false);
     const currentPostId = ref<string | null>(null);
-
+   const logout = () => {
+      localStorage.removeItem('token'); 
+      router.push('/'); // Redirect to login page
+    };
     const createNewPost = async () => {
       await store.dispatch('createPost', formData.value);
       formData.value = { title: '', body: '' };
@@ -95,12 +103,13 @@ export default defineComponent({
       isUpdating.value = false;
       currentPostId.value = null;
     };
-
+   
     onMounted(() => {
       store.dispatch('fetchPosts');
     });
 
     return {
+      logout,
       formData,
       posts,
       showModal,
@@ -116,6 +125,19 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.logout-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 .post-table td:last-child,
 .post-table th:last-child {
   text-align: right;
