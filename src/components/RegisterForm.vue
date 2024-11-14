@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-center min-h-screen bg-gray-50">
         <div class="login-card">
-            <h2 class="text-center">Login to Your Account</h2>
+            <h2 class="text-center">Register </h2>
             <form @submit.prevent="login" class="form">
                 <div class="form-group">
                     <label for="email" class="vs">Name</label>
