@@ -3,15 +3,11 @@ import {
   login,
   logout,
   register,
-  getMe,
   fetchPosts,
   createPost,
   updatePost,
   deletePost,
-  fetchComments,
-  createComment,
-  updateComment,
-  deleteComment,
+
 } from '../utils/api';
 import { State, Post, Comment } from './types'; // Import tipe yang telah didefinisikan
 
@@ -98,22 +94,7 @@ const store = createStore<State>({
       await deletePost(state.token, postId);
       commit('deletePost', postId);
     },
-    async fetchComments({ commit, state }, postId) {
-      const comments = await fetchComments(postId, state.token);
-      commit('setComments', { postId, comments });
-    },
-    async createComment({ commit, state }, { postId, comment }) {
-      const newComment = await createComment(postId, state.token, { comment });
-      commit('addComment', { postId, newComment });
-    },
-    async updateComment({ commit, state }, { postId, commentId, comment }) {
-      const updatedComment = await updateComment(state.token, commentId, { comment });
-      commit('updateComment', { postId, commentId, updatedComment });
-    },
-    async deleteComment({ commit, state }, { postId, commentId }) {
-      await deleteComment(state.token, commentId);
-      commit('deleteComment', { postId, commentId });
-    },
+
   },
 });
 

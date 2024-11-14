@@ -23,13 +23,7 @@ export const logout = async (token: string) => {
   });
 };
 
-// Utility untuk mendapatkan informasi user
-export const getMe = async (token: string) => {
-  const response = await apiClient.post('/auth/me', {}, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  });
-  return response.data;
-};
+
 
 // Utility untuk CRUD post
 export const fetchPosts = async (token: string) => {
@@ -62,30 +56,3 @@ export const deletePost = async (token: string, id: string) => {
   });
 };
 
-// Utility untuk CRUD comment
-export const fetchComments = async (postId: string, token: string) => {
-  const response = await apiClient.get(`/posts/${postId}/comments`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  });
-  return response.data;
-};
-
-export const createComment = async (postId: string, token: string, comment: { comment: string }) => {
-  const response = await apiClient.post(`/posts/${postId}/comments`, comment, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  });
-  return response.data;
-};
-
-export const updateComment = async (token: string, commentId: string, comment: { comment: string }) => {
-  const response = await apiClient.put(`/comments/${commentId}`, comment, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  });
-  return response.data;
-};
-
-export const deleteComment = async (token: string, commentId: string) => {
-  await apiClient.delete(`/comments/${commentId}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  });
-};

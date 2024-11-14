@@ -7,6 +7,7 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
+    meta: { requiresAuth: true },
     component: Home,
   },
   {
@@ -24,6 +25,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('token');
+if (to.matched.some(record => record.meta.requiresAuth) ) {
+  if (isAuthenticated) {
+    next();
+  }else {
+    next('/');
+  }
+} else {
+  next();
+  
+}
+
 });
 
 export default router;
